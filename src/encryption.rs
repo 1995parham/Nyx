@@ -8,7 +8,7 @@ pub struct KeyPair {
 }
 
 pub fn generate_key_pair(key_size: usize) -> Result<KeyPair> {
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
     let private_key =
         RsaPrivateKey::new(&mut rng, key_size).context("Failed to generate RSA private key")?;
     let public_key = RsaPublicKey::from(&private_key);
@@ -20,7 +20,7 @@ pub fn generate_key_pair(key_size: usize) -> Result<KeyPair> {
 }
 
 pub fn encrypt_content(content: &str, public_key: &RsaPublicKey) -> Result<String> {
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
     let encrypted_data = public_key
         .encrypt(&mut rng, Pkcs1v15Encrypt, content.as_bytes())
         .context("Failed to encrypt content")?;
