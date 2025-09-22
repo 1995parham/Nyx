@@ -38,9 +38,7 @@ impl Default for AppConfig {
                 url: "postgresql://nyx_user:nyx_password@localhost:5432/nyx_db".to_string(),
                 max_connections: 10,
             },
-            encryption: EncryptionConfig {
-                key_size: 2048,
-            },
+            encryption: EncryptionConfig { key_size: 2048 },
         }
     }
 }
@@ -68,9 +66,7 @@ impl AppConfig {
             );
         }
 
-        let config = builder
-            .build()
-            .context("Failed to build configuration")?;
+        let config = builder.build().context("Failed to build configuration")?;
 
         config
             .try_deserialize()

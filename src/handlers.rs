@@ -52,25 +52,27 @@ pub async fn encrypt_content(
             )
         })?;
 
-    let private_key_pem = encryption::serialize_private_key(&key_pair.private_key).map_err(|e| {
-        (
-            StatusCode::INTERNAL_SERVER_ERROR,
-            Json(ErrorResponse {
-                error: format!("Failed to serialize private key: {}", e),
-            }),
-        )
-    })?;
-
-    let content_id = database::create_encrypted_content(&pool, &encrypted_content, &private_key_pem)
-        .await
-        .map_err(|e| {
+    let private_key_pem =
+        encryption::serialize_private_key(&key_pair.private_key).map_err(|e| {
             (
                 StatusCode::INTERNAL_SERVER_ERROR,
                 Json(ErrorResponse {
-                    error: format!("Failed to store encrypted content: {}", e),
+                    error: format!("Failed to serialize private key: {}", e),
                 }),
             )
         })?;
+
+    let content_id =
+        database::create_encrypted_content(&pool, &encrypted_content, &private_key_pem)
+            .await
+            .map_err(|e| {
+                (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    Json(ErrorResponse {
+                        error: format!("Failed to store encrypted content: {}", e),
+                    }),
+                )
+            })?;
 
     Ok(Json(EncryptResponse {
         key: content_id.to_string(),
@@ -110,8 +112,8 @@ pub async fn decrypt_content(
         )
     })?;
 
-    let private_key = encryption::deserialize_private_key(&encrypted_content.private_key)
-        .map_err(|e| {
+    let private_key =
+        encryption::deserialize_private_key(&encrypted_content.private_key).map_err(|e| {
             (
                 StatusCode::INTERNAL_SERVER_ERROR,
                 Json(ErrorResponse {

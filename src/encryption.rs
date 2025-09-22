@@ -9,8 +9,8 @@ pub struct KeyPair {
 
 pub fn generate_key_pair(key_size: usize) -> Result<KeyPair> {
     let mut rng = rand::thread_rng();
-    let private_key = RsaPrivateKey::new(&mut rng, key_size)
-        .context("Failed to generate RSA private key")?;
+    let private_key =
+        RsaPrivateKey::new(&mut rng, key_size).context("Failed to generate RSA private key")?;
     let public_key = RsaPublicKey::from(&private_key);
 
     Ok(KeyPair {
@@ -50,6 +50,5 @@ pub fn serialize_private_key(private_key: &RsaPrivateKey) -> Result<String> {
 
 pub fn deserialize_private_key(private_key_pem: &str) -> Result<RsaPrivateKey> {
     use rsa::pkcs8::DecodePrivateKey;
-    RsaPrivateKey::from_pkcs8_pem(private_key_pem)
-        .context("Failed to deserialize private key")
+    RsaPrivateKey::from_pkcs8_pem(private_key_pem).context("Failed to deserialize private key")
 }
