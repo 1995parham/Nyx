@@ -1,5 +1,5 @@
 use anyhow::{Context, Result};
-use config::{Config, ConfigError, Environment, File};
+use config::{Config, Environment, File};
 use serde::{Deserialize, Serialize};
 use std::env;
 
