@@ -1,0 +1,15 @@
+# Nyx Configuration File
+# This file contains default configuration values that can be overridden
+# by environment variables with the NYX_ prefix
+
+[server]
+host = "0.0.0.0"
+port = 3000
+
+[database]
+url = "postgresql://nyx_user:nyx_password@localhost:5432/nyx_db"
+max_connections = 10
+
+[encryption]
+# RSA key size in bits
+key_size = 2048

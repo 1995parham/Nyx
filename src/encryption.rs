@@ -7,9 +7,9 @@ pub struct KeyPair {
     pub private_key: RsaPrivateKey,
 }
 
-pub fn generate_key_pair() -> Result<KeyPair> {
+pub fn generate_key_pair(key_size: usize) -> Result<KeyPair> {
     let mut rng = rand::thread_rng();
-    let private_key = RsaPrivateKey::new(&mut rng, 2048)
+    let private_key = RsaPrivateKey::new(&mut rng, key_size)
         .context("Failed to generate RSA private key")?;
     let public_key = RsaPublicKey::from(&private_key);
 

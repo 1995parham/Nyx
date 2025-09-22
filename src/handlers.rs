@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 use sqlx::PgPool;
 use uuid::Uuid;
 
-use crate::{database, encryption};
+use crate::{config::AppConfig, database, encryption};
 
 #[derive(Debug, Deserialize)]
 pub struct EncryptRequest {
@@ -30,10 +30,10 @@ pub struct ErrorResponse {
 }
 
 pub async fn encrypt_content(
-    State(pool): State<PgPool>,
+    State((pool, config)): State<(PgPool, AppConfig)>,
     Json(request): Json<EncryptRequest>,
 ) -> Result<Json<EncryptResponse>, (StatusCode, Json<ErrorResponse>)> {
-    let key_pair = encryption::generate_key_pair().map_err(|e| {
+    let key_pair = encryption::generate_key_pair(config.key_size()).map_err(|e| {
         (
             StatusCode::INTERNAL_SERVER_ERROR,
             Json(ErrorResponse {
@@ -78,7 +78,7 @@ pub async fn encrypt_content(
 }
 
 pub async fn decrypt_content(
-    State(pool): State<PgPool>,
+    State((pool, _config)): State<(PgPool, AppConfig)>,
     Path(key): Path<String>,
 ) -> Result<Json<DecryptResponse>, (StatusCode, Json<ErrorResponse>)> {
     let content_id = Uuid::parse_str(&key).map_err(|_| {

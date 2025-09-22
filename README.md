@@ -35,18 +35,75 @@ Each piece of content gets its own unique key pair, ensuring maximum security.
    docker-compose up -d
    ```
 
-3. **Set up environment**:
-
-   ```bash
-   cp .env.example .env
-   ```
-
-4. **Run the server**:
+3. **Run the server**:
    ```bash
    cargo run
    ```
 
 The server will start on `http://localhost:3000`
+
+## Configuration
+
+Nyx uses a layered configuration system with the following precedence (highest to lowest):
+
+1. **Environment variables** (highest priority)
+2. **config.toml file**
+3. **Built-in defaults** (lowest priority)
+
+### Configuration Methods
+
+#### 1. Using config.toml file
+
+The `config.toml` file in the project root contains all configuration options:
+
+```toml
+[server]
+host = "0.0.0.0"
+port = 3000
+
+[database]
+url = "postgresql://nyx_user:nyx_password@localhost:5432/nyx_db"
+max_connections = 10
+
+[encryption]
+key_size = 2048
+```
+
+#### 2. Using Environment Variables
+
+All configuration can be overridden using environment variables with the `NYX_` prefix:
+
+```bash
+# Server configuration
+export NYX_SERVER__HOST="127.0.0.1"
+export NYX_SERVER__PORT=8080
+
+# Database configuration
+export NYX_DATABASE__URL="postgresql://user:pass@host:5432/db"
+export NYX_DATABASE__MAX_CONNECTIONS=20
+
+# Encryption configuration
+export NYX_ENCRYPTION__KEY_SIZE=4096
+```
+
+#### 3. Custom Config File
+
+You can specify a custom config file path:
+
+```bash
+export NYX_CONFIG_PATH="/path/to/custom/config"
+cargo run
+```
+
+### Configuration Options
+
+| Section | Option | Default | Description |
+|---------|--------|---------|-------------|
+| `server.host` | Host address | `0.0.0.0` | Server bind address |
+| `server.port` | Port number | `3000` | Server port |
+| `database.url` | Database URL | `postgresql://nyx_user:nyx_password@localhost:5432/nyx_db` | PostgreSQL connection string |
+| `database.max_connections` | Max connections | `10` | Maximum database connections |
+| `encryption.key_size` | RSA key size | `2048` | RSA key size in bits (1024, 2048, 4096) |
 
 ## API Usage
 
@@ -85,11 +142,6 @@ Response:
 ```
 
 **Note**: After successful decryption, the content is permanently deleted from the database.
-
-## Environment Variables
-
-- `DATABASE_URL` - PostgreSQL connection string (default: `postgresql://nyx_user:nyx_password@localhost:5432/nyx_db`)
-- `PORT` - Server port (default: `3000`)
 
 ## Security Features
 
