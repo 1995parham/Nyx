@@ -10,7 +10,6 @@ use axum::{
 use config::AppConfig;
 use sqlx::postgres::PgPoolOptions;
 use tower_http::cors::CorsLayer;
-use tracing_subscriber;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
