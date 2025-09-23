@@ -18,7 +18,7 @@ sqlx = { version = "0.8", features = [
 ] }
 uuid = { version = "1.0", features = ["v4", "serde"] }
 chrono = { version = "0.4", features = ["serde"] }
-rsa = "0.9"
+rsa = "0.10.0-rc.8"
 rand = "0.9"
 base64 = "0.22"
 anyhow = "1.0"
