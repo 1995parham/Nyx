@@ -31,7 +31,7 @@ test: migrate
 migrate: (dev "up")
 
 # connect into the dev environment database
-database: (dev "up") (dev "exec" "database psql nyx_db")
+database: (dev "up") (dev "exec" "postgres psql -U nyx_user nyx_db")
 
 lint:
     cargo fmt

@@ -32,7 +32,7 @@ pub async fn create_encrypted_content(
 
 pub async fn get_encrypted_content(pool: &PgPool, id: Uuid) -> Result<Option<EncryptedContent>> {
     let row = sqlx::query_as::<_, EncryptedContent>(
-        "SELECT id, encrypted_data, private_key, created_at FROM encrypted_content WHERE id = ?",
+        "SELECT id, encrypted_data, private_key, created_at FROM encrypted_content WHERE id = $1",
     )
     .bind(id)
     .fetch_optional(pool)

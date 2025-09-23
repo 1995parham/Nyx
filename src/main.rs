@@ -32,7 +32,7 @@ async fn main() -> anyhow::Result<()> {
 
     let app = Router::new()
         .route("/encrypt", post(handlers::encrypt_content))
-        .route("/decrypt/:key", get(handlers::decrypt_content))
+        .route("/decrypt/{key}", get(handlers::decrypt_content))
         .layer(CorsLayer::permissive())
         .with_state((pool, config.clone()));
 

@@ -97,13 +97,13 @@ cargo run
 
 ### Configuration Options
 
-| Section | Option | Default | Description |
-|---------|--------|---------|-------------|
-| `server.host` | Host address | `0.0.0.0` | Server bind address |
-| `server.port` | Port number | `3000` | Server port |
-| `database.url` | Database URL | `postgresql://nyx_user:nyx_password@localhost:5432/nyx_db` | PostgreSQL connection string |
-| `database.max_connections` | Max connections | `10` | Maximum database connections |
-| `encryption.key_size` | RSA key size | `2048` | RSA key size in bits (1024, 2048, 4096) |
+| Section                    | Option          | Default                                                    | Description                             |
+| -------------------------- | --------------- | ---------------------------------------------------------- | --------------------------------------- |
+| `server.host`              | Host address    | `0.0.0.0`                                                  | Server bind address                     |
+| `server.port`              | Port number     | `3000`                                                     | Server port                             |
+| `database.url`             | Database URL    | `postgresql://nyx_user:nyx_password@localhost:5432/nyx_db` | PostgreSQL connection string            |
+| `database.max_connections` | Max connections | `10`                                                       | Maximum database connections            |
+| `encryption.key_size`      | RSA key size    | `2048`                                                     | RSA key size in bits (1024, 2048, 4096) |
 
 ## API Usage
 
